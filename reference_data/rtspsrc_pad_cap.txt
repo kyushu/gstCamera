@@ -1,0 +1,234 @@
+Factory Details:
+  Rank                     none (0)
+  Long-name                RTSP packet receiver
+  Klass                    Source/Network
+  Description              Receive data over the network via RTSP (RFC 2326)
+  Author                   Wim Taymans <wim@fluendo.com>, Thijs Vermeir <thijs.vermeir@barco.com>, Lutz Mueller <lutz@topfrose.de>
+
+Plugin Details:
+  Name                     rtsp
+  Description              transfer data via RTSP
+  Filename                 /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstrtsp.so
+  Version                  1.8.3
+  License                  LGPL
+  Source module            gst-plugins-good
+  Source release date      2016-08-19
+  Binary package           GStreamer Good Plugins (Ubuntu)
+  Origin URL               https://launchpad.net/distros/ubuntu/+source/gst-plugins-good1.0
+
+GObject
+ +----GInitiallyUnowned
+       +----GstObject
+             +----GstElement
+                   +----GstBin
+                         +----GstRTSPSrc
+
+Implemented Interfaces:
+  GstChildProxy
+  GstURIHandler
+
+Pad Templates:
+  SRC template: 'stream_%u'
+    Availability: Sometimes
+    Capabilities:
+      application/x-rtp
+      application/x-rdt
+
+
+Element Flags:
+  no flags set
+
+Bin Flags:
+  no flags set
+
+Element Implementation:
+  Has change_state() function: 0x7f6780e9fe50
+
+Element has no clocking capabilities.
+
+URI handling capabilities:
+  Element can act as source.
+  Supported URI protocols:
+    rtsp
+    rtspu
+    rtspt
+    rtsph
+    rtsp-sdp
+    rtsps
+    rtspsu
+    rtspst
+    rtspsh
+
+Pads:
+  none
+
+Element Properties:
+  name                : The name of the object
+                        flags: readable, writable
+                        String. Default: "rtspsrc0"
+  parent              : The parent of the object
+                        flags: readable, writable
+                        Object of type "GstObject"
+  async-handling      : The bin will handle Asynchronous state changes
+                        flags: readable, writable
+                        Boolean. Default: false
+  message-forward     : Forwards all children messages
+                        flags: readable, writable
+                        Boolean. Default: false
+  location            : Location of the RTSP url to read
+                        flags: readable, writable
+                        String. Default: null
+  protocols           : Allowed lower transport protocols
+                        flags: readable, writable
+                        Flags "GstRTSPLowerTrans" Default: 0x00000007, "tcp+udp-mcast+udp"
+                           (0x00000000): unknown          - GST_RTSP_LOWER_TRANS_UNKNOWN
+                           (0x00000001): udp              - GST_RTSP_LOWER_TRANS_UDP
+                           (0x00000002): udp-mcast        - GST_RTSP_LOWER_TRANS_UDP_MCAST
+                           (0x00000004): tcp              - GST_RTSP_LOWER_TRANS_TCP
+                           (0x00000010): http             - GST_RTSP_LOWER_TRANS_HTTP
+                           (0x00000020): tls              - GST_RTSP_LOWER_TRANS_TLS
+  debug               : Dump request and response messages to stdout
+                        flags: readable, writable
+                        Boolean. Default: false
+  retry               : Max number of retries when allocating RTP ports.
+                        flags: readable, writable
+                        Unsigned Integer. Range: 0 - 65535 Default: 20 
+  timeout             : Retry TCP transport after UDP timeout microseconds (0 = disabled)
+                        flags: readable, writable
+                        Unsigned Integer64. Range: 0 - 18446744073709551615 Default: 5000000 
+  tcp-timeout         : Fail after timeout microseconds on TCP connections (0 = disabled)
+                        flags: readable, writable
+                        Unsigned Integer64. Range: 0 - 18446744073709551615 Default: 20000000 
+  latency             : Amount of ms to buffer
+                        flags: readable, writable
+                        Unsigned Integer. Range: 0 - 4294967295 Default: 2000 
+  drop-on-latency     : Tells the jitterbuffer to never exceed the given latency in size
+                        flags: readable, writable
+                        Boolean. Default: false
+  connection-speed    : Network connection speed in kbps (0 = unknown)
+                        flags: readable, writable
+                        Unsigned Integer64. Range: 0 - 18446744073709551 Default: 0 
+  nat-method          : Method to use for traversing firewalls and NAT
+                        flags: readable, writable
+                        Enum "GstRTSPNatMethod" Default: 1, "dummy"
+                           (0): none             - None
+                           (1): dummy            - Send Dummy packets
+  do-rtcp             : Send RTCP packets, disable for old incompatible server.
+                        flags: readable, writable
+                        Boolean. Default: true
+  do-rtsp-keep-alive  : Send RTSP keep alive packets, disable for old incompatible server.
+                        flags: readable, writable
+                        Boolean. Default: true
+  proxy               : Proxy settings for HTTP tunneling. Format: [http://][user:passwd@]host[:port]
+                        flags: readable, writable
+                        String. Default: null
+  proxy-id            : HTTP proxy URI user id for authentication
+                        flags: readable, writable
+                        String. Default: null
+  proxy-pw            : HTTP proxy URI user password for authentication
+                        flags: readable, writable
+                        String. Default: null
+  rtp-blocksize       : RTP package size to suggest to server (0 = disabled)
+                        flags: readable, writable
+                        Unsigned Integer. Range: 0 - 65536 Default: 0 
+  user-id             : RTSP location URI user id for authentication
+                        flags: readable, writable
+                        String. Default: null
+  user-pw             : RTSP location URI user password for authentication
+                        flags: readable, writable
+                        String. Default: null
+  buffer-mode         : Control the buffering algorithm in use
+                        flags: readable, writable
+                        Enum "GstRTSPSrcBufferMode" Default: 3, "auto"
+                           (0): none             - Only use RTP timestamps
+                           (1): slave            - Slave receiver to sender clock
+                           (2): buffer           - Do low/high watermark buffering
+                           (3): auto             - Choose mode depending on stream live
+                           (4): synced           - Synchronized sender and receiver clocks
+  port-range          : Client port range that can be used to receive RTP and RTCP data, eg. 3000-3005 (NULL = no restrictions)
+                        flags: readable, writable
+                        String. Default: null
+  udp-buffer-size     : Size of the kernel UDP receive buffer in bytes, 0=default
+                        flags: readable, writable
+                        Integer. Range: 0 - 2147483647 Default: 524288 
+  short-header        : Only send the basic RTSP headers for broken encoders
+                        flags: readable, writable
+                        Boolean. Default: false
+  probation           : Consecutive packet sequence numbers to accept the source
+                        flags: readable, writable
+                        Unsigned Integer. Range: 0 - 4294967295 Default: 2 
+  udp-reconnect       : Reconnect to the server if RTSP connection is closed when doing UDP
+                        flags: readable, writable
+                        Boolean. Default: true
+  multicast-iface     : The network interface on which to join the multicast group
+                        flags: readable, writable
+                        String. Default: null
+  ntp-sync            : Synchronize received streams to the NTP clock
+                        flags: readable, writable
+                        Boolean. Default: false
+  use-pipeline-clock  : Use the pipeline running-time to set the NTP time in the RTCP SR messages(DEPRECATED: Use ntp-time-source property)
+                        flags: readable, writable, deprecated
+                        Boolean. Default: false
+  sdes                : The SDES items of this session
+                        flags: readable, writable
+                        Boxed pointer of type "GstStructure"
+  tls-validation-flags: TLS certificate validation flags used to validate the server certificate
+                        flags: readable, writable
+                        Flags "GTlsCertificateFlags" Default: 0x0000007f, "validate-all"
+                           (0x00000001): unknown-ca       - G_TLS_CERTIFICATE_UNKNOWN_CA
+                           (0x00000002): bad-identity     - G_TLS_CERTIFICATE_BAD_IDENTITY
+                           (0x00000004): not-activated    - G_TLS_CERTIFICATE_NOT_ACTIVATED
+                           (0x00000008): expired          - G_TLS_CERTIFICATE_EXPIRED
+                           (0x00000010): revoked          - G_TLS_CERTIFICATE_REVOKED
+                           (0x00000020): insecure         - G_TLS_CERTIFICATE_INSECURE
+                           (0x00000040): generic-error    - G_TLS_CERTIFICATE_GENERIC_ERROR
+                           (0x0000007f): validate-all     - G_TLS_CERTIFICATE_VALIDATE_ALL
+  tls-database        : TLS database with anchor certificate authorities used to validate the server certificate
+                        flags: readable, writable
+                        Object of type "GTlsDatabase"
+  tls-interaction     : A GTlsInteraction object to promt the user for password or certificate
+                        flags: readable, writable
+                        Object of type "GTlsInteraction"
+  do-retransmission   : Ask the server to retransmit lost packets
+                        flags: readable, writable
+                        Boolean. Default: true
+  ntp-time-source     : NTP time source for RTCP packets
+                        flags: readable, writable
+                        Enum "GstRTSPSrcNtpTimeSource" Default: 0, "ntp"
+                           (0): ntp              - NTP time based on realtime clock
+                           (1): unix             - UNIX time based on realtime clock
+                           (2): running-time     - Running time based on pipeline clock
+                           (3): clock-time       - Pipeline clock time
+  user-agent          : The User-Agent string to send to the server
+                        flags: readable, writable
+                        String. Default: "GStreamer/1.8.3"
+  max-rtcp-rtp-time-diff: Maximum amount of time in ms that the RTP time in RTCP SRs is allowed to be ahead (-1 disabled)
+                        flags: readable, writable
+                        Integer. Range: -1 - 2147483647 Default: 1000 
+
+Element Signals:
+  "pad-added" :  void user_function (GstElement* object,
+                                     GstPad* arg0,
+                                     gpointer user_data);
+  "pad-removed" :  void user_function (GstElement* object,
+                                       GstPad* arg0,
+                                       gpointer user_data);
+  "no-more-pads" :  void user_function (GstElement* object,
+                                        gpointer user_data);
+  "handle-request" :  void user_function (GstElement* object,
+                                          gpointer arg0,
+                                          gpointer arg1,
+                                          gpointer user_data);
+  "on-sdp" :  void user_function (GstElement* object,
+                                  GstSDPMessage* arg0,
+                                  gpointer user_data);
+  "select-stream" :  gboolean user_function (GstElement* object,
+                                             guint arg0,
+                                             GstCaps* arg1,
+                                             gpointer user_data);
+  "new-manager" :  void user_function (GstElement* object,
+                                       GstElement* arg0,
+                                       gpointer user_data);
+  "request-rtcp-key" :  GstCaps * user_function (GstElement* object,
+                                                 guint arg0,
+                                                 gpointer user_data);
